@@ -18,8 +18,8 @@ class HabitLogFactory extends Factory
     public function definition(): array
     {
         return [
-            'habit_id'     => Habit::factory(),
-            'uuid'         => fake()->uuid(),
+            'habit_id' => Habit::factory(),
+            'uuid' => fake()->uuid(),
             'completed_at' => fake()->dateTimeBetween('-1 year', 'now'),
         ];
     }

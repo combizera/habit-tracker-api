@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreHabitRequest;
 use App\Http\Resources\HabitResource;
 use App\Models\Habit;
-use Illuminate\Http\Request;
 
 class HabitController extends Controller
 {
@@ -14,6 +13,11 @@ class HabitController extends Controller
         return HabitResource::collection(
             Habit::all()
         );
+    }
+
+    public function show(Habit $habit)
+    {
+        return HabitResource::make($habit);
     }
 
     public function store(StoreHabitRequest $request)
