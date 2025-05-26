@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class StoreHabitRequest extends FormRequest
 {
@@ -22,7 +25,12 @@ class StoreHabitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
+            'title' => ['required', 'max:255', 'min:3', 'string']
         ];
+    }
+
+    protected function passedValidation():void
+    {
+        $this->merge(['uuid' => Str::uuid()]);
     }
 }

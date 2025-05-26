@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreHabitRequest;
@@ -22,9 +24,9 @@ class HabitController extends Controller
 
     public function store(StoreHabitRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->only('title', 'uuid');
 
-        $habit = Habit::query()->create($data);
+        $habit = Habit::query()->create(array_merge($data, ['user_id' => 1]));
 
         return HabitResource::make($habit);
     }
