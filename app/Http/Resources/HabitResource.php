@@ -15,11 +15,11 @@ class HabitResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'    => $this->uuid,
+            'id' => $this->uuid,
             'title' => $this->title,
-            'meta'  => [
-                'link'  => route('api.habits.show', $this),
-            ]
+            'meta' => [
+                'link' => route('api.habits.show', $this),
+            ],
         ];
     }
 }

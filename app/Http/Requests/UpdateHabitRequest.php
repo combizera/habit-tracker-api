@@ -1,11 +1,10 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 
 class UpdateHabitRequest extends FormRequest
 {
@@ -25,7 +24,7 @@ class UpdateHabitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'max:255', 'min:3', 'string']
+            'title' => ['required', 'max:255', 'min:3', 'string'],
         ];
     }
 }
