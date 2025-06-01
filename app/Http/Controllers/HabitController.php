@@ -14,28 +14,44 @@ class HabitController extends Controller
 {
     public function index()
     {
+        request()->validate([
+            'with' => ['string', 'nullable', 'regex:/\b(?:logs|user)(?:.*\b(?:logs|user))?/i']
+        ]);
+
         return HabitResource::collection(
+
             Habit::query()
                 ->when(
-                    str(request()->string('with', ''))->contains('user'),
-                    fn ($query) => $query->with('user'),
+                    request()->string('with', '')->contains('user'),
+                    fn ($query) => $query->with('user')
                 )
                 ->when(
-                    str(request()->string('with', ''))->contains('logs'),
-                    fn ($query) => $query->with('logs'),
+                    request()->string('with', '')->contains('logs'),
+                    fn ($query) => $query->with('logs')
                 )
                 ->paginate()
+
         );
     }
 
     public function show(Habit $habit)
     {
-        return HabitResource::make($habit);
+        request()->validate([
+            'with' => ['string', 'nullable', 'regex:/\b(?:logs|user)(?:.*\b(?:logs|user))?/i']
+        ]);
+
+        $load = request()->string('with')->explode(',')->filter(fn ($w) => strlen($w) > 0)->toArray();
+
+        return HabitResource::make(
+
+            $habit->load($load)
+
+        );
     }
 
     public function store(StoreHabitRequest $request)
     {
-        $habit = Habit::query()->create(array_merge($request->validated(), ['user_id' => 1]));
+        $habit = Habit::create(array_merge($request->validated(), ['user_id' => 1]));
 
         return HabitResource::make($habit);
     }
